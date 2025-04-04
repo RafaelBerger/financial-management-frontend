@@ -2,11 +2,11 @@ import axios from "axios";
 
 const BACKEND_URL = "http://localhost:8080/";
 
-interface getMonthArgs {
-  dataMonth: string;
-}
+// interface getMonthArgs {
+//   dataMonth: string;
+// }
 
-export const getMonthTasks = async (dataMonth: getMonthArgs) => {
+export const getMonthTasks = async (dataMonth: string) => {
   const response = await axios.get(`${BACKEND_URL}month/:${dataMonth}`);
   return response.data;
 };
@@ -34,11 +34,9 @@ export const postTasks = async (
   return response;
 };
 
-interface deleteTaskArgs {
-  id: number;
-}
 
-export const deleteTask = async (id: deleteTaskArgs) => {
+
+export const deleteTask = async (id: number) => {
   const response = await axios.delete(BACKEND_URL + `${id}`);
   return response;
 };

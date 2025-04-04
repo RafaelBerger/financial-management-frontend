@@ -21,6 +21,7 @@ function App() {
   const [income, setIncome] = useState(0);
   const [expense, setExpense] = useState(0);
   const [balance, setBalance] = useState(0);
+
   //#region
   function openModal() {
     setIsOpen(true);
@@ -127,6 +128,7 @@ function App() {
             <p className="text-base">
               Saldo:{" "}
               <span
+              
                 className={`${
                   balance >= 0 ? "text-green-400" : "text-red-600"
                 }`}

@@ -15,7 +15,6 @@ interface CardProps {
 }
 
 const Card = (props: CardProps) => {
-  const [isPositive, _setIsPositive] = useState(props.positive);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -27,8 +26,8 @@ const Card = (props: CardProps) => {
     setIsOpen(false);
   }
 
-  const taskDeleteFunc = (id: CardProps) => {
-    deleteTask(id);
+  const taskDeleteFunc = (id: number) => {
+    deleteTask(id); 
   };
 
   return (
@@ -70,7 +69,7 @@ const Card = (props: CardProps) => {
           <div>
             <span
               className={`${
-                isPositive === true ? "text-green-400" : "text-red-600"
+                props.positive === true ? "text-green-400" : "text-red-600"
               }`}
             >
               R$ {props.value}

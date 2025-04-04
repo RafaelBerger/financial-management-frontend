@@ -25,15 +25,24 @@ const ModalUpdate = (props: modalUpdateProps) => {
   const [inputRadio, setInputRadio] = useState(props.positiveCard);
   const [inputDate, setInputDate] = useState(dataDaApiFormatada);
 
+  
+
   function handleInputText(e: any) {
     setInputText(e.target.value);
     console.log(inputText);
   }
 
-  function handleInputNumber(e: any) {
-    setInputNumber(e.target.value);
-    console.log(inputNumber);
+  function handleInputNumber(e: React.ChangeEvent<HTMLInputElement>) {
+    const value = Number(e.target.value);
+  
+    if (value > 2147483647) {
+      alert("O valor máximo permitido é 2.147.483.647");
+      return;
+    }
+  
+    setInputNumber(value);
   }
+  
 
   function handleInputRadio(e: any) {
     setInputRadio(e.target.value);
@@ -57,7 +66,7 @@ const ModalUpdate = (props: modalUpdateProps) => {
     if (
       inputText === "" ||
       inputNumber === 0 ||
-      inputRadio == "" ||
+      inputRadio == null ||
       inputDate == ""
     ) {
       return "";
@@ -95,6 +104,7 @@ const ModalUpdate = (props: modalUpdateProps) => {
           type="number"
           placeholder="Valor"
           className="text-black w-2/4 p-2 rounded-md"
+          max={2147483647}
           onChange={handleInputNumber}
           value={inputNumber}
         />
