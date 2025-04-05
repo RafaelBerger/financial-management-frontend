@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BACKEND_URL = "https://financial-management-backend.onrender.com/";
+const BACKEND_URL = import.meta.env.VITE_URL_PROD;
 
 export const getMonthTasks = async (dataMonth: string) => {
   const response = await axios.get(`${BACKEND_URL}month/:${dataMonth}`);
