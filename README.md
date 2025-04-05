@@ -32,4 +32,4 @@ VITE_API_URL='conexão com o backend'
   
 
 📦 Deploy  
-  O frontend foi hospedado no Vercel, com variáveis de ambiente configuradas para apontar para a API do backend na Render.
+  O frontend foi hospedado no Vercel, com variáveis de ambiente configuradas para apontar para a API do backend no Render.
