@@ -49,18 +49,14 @@ interface updateTaskArgs {
   data: string;
 }
 
-export const updateTaskApi = async (
-  id: updateTaskArgs,
-  descricao: updateTaskArgs,
-  dinheiro: updateTaskArgs,
-  positivo: updateTaskArgs,
-  data: updateTaskArgs
-) => {
+export const updateTaskApi = async ({ id, descricao, dinheiro, positivo, data }: updateTaskArgs) => {
   const response = await axios.put(BACKEND_URL + `${id}`, {
     description: descricao,
     money: dinheiro,
     positive: positivo,
     data_registro: data,
   });
+
   return response;
 };
+

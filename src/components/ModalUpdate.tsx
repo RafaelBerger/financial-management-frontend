@@ -61,7 +61,7 @@ const ModalUpdate = (props: modalUpdateProps) => {
   const year = dateCalendar.getFullYear();
   //#endregion
 
-  const updateTask = async (id: modalUpdateProps) => {
+  const updateTask = async (id: number) => {
     props.fechaModal();
     if (
       inputText === "" ||
@@ -71,11 +71,11 @@ const ModalUpdate = (props: modalUpdateProps) => {
     ) {
       return "";
     } else {
-      await updateTaskApi(id, inputText, inputNumber, inputRadio, inputDate);
+      await updateTaskApi({id, descricao: inputText, dinheiro:inputNumber, positivo:inputRadio, data:inputDate});
 
       setInputDate("");
       setInputText("");
-      setInputRadio("");
+      setInputRadio(false);
       setInputNumber(0);
     }
   };
