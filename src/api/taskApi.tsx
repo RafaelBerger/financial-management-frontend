@@ -1,10 +1,6 @@
 import axios from "axios";
 
-const BACKEND_URL = "http://localhost:8080/";
-
-// interface getMonthArgs {
-//   dataMonth: string;
-// }
+const BACKEND_URL = "https://financial-management-backend.onrender.com/";
 
 export const getMonthTasks = async (dataMonth: string) => {
   const response = await axios.get(`${BACKEND_URL}month/:${dataMonth}`);
