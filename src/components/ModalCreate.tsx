@@ -42,7 +42,7 @@ const ModalCreate = (props: modalProps) => {
     ) {
       return "";
     } else {
-      await postTasks(inputText, inputNumber, inputRadio, inputDate);
+      await postTasks({descricao: inputText, dinheiro: Number(inputNumber), positivo: inputRadio === 'true', data_registro: inputDate});
 
       setInputDate("");
       setInputText("");

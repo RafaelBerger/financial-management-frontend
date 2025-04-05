@@ -18,17 +18,12 @@ interface postArgs {
   data_registro: string;
 }
 
-export const postTasks = async (
-  descricao: postArgs,
-  dinheiro: postArgs,
-  positivo: postArgs,
-  data: postArgs
-) => {
+export const postTasks = async (task: postArgs) => {
   const response = await axios.post(BACKEND_URL, {
-    descriptions: descricao,
-    money: dinheiro,
-    positive: positivo,
-    data_registro: data,
+    descriptions: task.descricao,
+    money: task.dinheiro,
+    positive: task.positivo,
+    data_registro: task.data_registro,
   });
 
   return response;
