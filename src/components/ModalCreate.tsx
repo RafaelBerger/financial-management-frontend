@@ -26,6 +26,26 @@ const ModalCreate = (props: modalProps) => {
   function handleInputDate(e: any) {
     setInputDate(e.target.value);
   }
+
+  function normalizeMoneyValue(value: string) {
+    const normalizedValue = value.replace(",", ".");
+    const numberValue = Number(normalizedValue);
+
+    if (value.trim() === "" || Number.isNaN(numberValue)) {
+      alert("Informe um valor válido.");
+      return null;
+    }
+
+    const roundedValue = Math.round(numberValue);
+
+    if (roundedValue > 2147483647) {
+      alert("O valor máximo permitido é 2.147.483.647");
+      return null;
+    }
+
+    return roundedValue;
+  }
+
   //#region
   const dateCalendar = new Date();
   const getMonth = dateCalendar.getMonth() + 1;
@@ -40,14 +60,22 @@ const ModalCreate = (props: modalProps) => {
       inputRadio == "" ||
       inputDate == ""
     ) {
-      return "";
+      return false;
     } else {
-      await postTasks({descricao: inputText, dinheiro: Number(inputNumber), positivo: inputRadio === 'true', data_registro: inputDate});
+      const moneyValue = normalizeMoneyValue(inputNumber);
+
+      if (moneyValue === null) {
+        return false;
+      }
+
+      await postTasks({descricao: inputText, dinheiro: moneyValue, positivo: inputRadio === 'true', data_registro: inputDate});
 
       setInputDate("");
       setInputText("");
       setInputRadio("");
       setInputNumber("");
+
+      return true;
     }
   };
 
@@ -72,7 +100,8 @@ const ModalCreate = (props: modalProps) => {
           required
         />
         <input
-          type="number"
+          type="text"
+          inputMode="decimal"
           placeholder="Valor"
           className="text-black w-2/4 p-2 rounded-md"
           onChange={handleInputNumber}
@@ -108,10 +137,13 @@ const ModalCreate = (props: modalProps) => {
         <button
           type="submit"
           className="w-auto py-2 px-10 rounded-lg bg-sky-500 hover:bg-sky-700 transition-colors"
-          onClick={(e) => {
+          onClick={async (e) => {
             e.preventDefault();
-            saveNewTask();
-            props.fetch();
+            const isSaved = await saveNewTask();
+
+            if (isSaved) {
+              props.fetch();
+            }
           }}
         >
           Salvar

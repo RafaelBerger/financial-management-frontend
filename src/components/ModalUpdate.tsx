@@ -21,37 +21,45 @@ const ModalUpdate = (props: modalUpdateProps) => {
   const dataDaApiFormatada = `${yearDate}-${monthDateFormat}`;
 
   const [inputText, setInputText] = useState(props.descriptionCard);
-  const [inputNumber, setInputNumber] = useState(props.valueCard);
-  const [inputRadio, setInputRadio] = useState(props.positiveCard);
+  const [inputNumber, setInputNumber] = useState(String(props.valueCard));
+  const [inputRadio, setInputRadio] = useState<boolean | string>(
+    props.positiveCard
+  );
   const [inputDate, setInputDate] = useState(dataDaApiFormatada);
 
-  
-
-  function handleInputText(e: any) {
+  function handleInputText(e: React.ChangeEvent<HTMLInputElement>) {
     setInputText(e.target.value);
-    console.log(inputText);
   }
 
   function handleInputNumber(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = Number(e.target.value);
-  
-    if (value > 2147483647) {
-      alert("O valor máximo permitido é 2.147.483.647");
-      return;
-    }
-  
-    setInputNumber(value);
+    setInputNumber(e.target.value);
   }
-  
 
-  function handleInputRadio(e: any) {
+  function handleInputRadio(e: React.ChangeEvent<HTMLInputElement>) {
     setInputRadio(e.target.value);
-    console.log(inputRadio);
   }
 
-  function handleInputDate(e: any) {
+  function handleInputDate(e: React.ChangeEvent<HTMLInputElement>) {
     setInputDate(e.target.value);
-    console.log(inputDate);
+  }
+
+  function normalizeMoneyValue(value: string) {
+    const normalizedValue = value.replace(",", ".");
+    const numberValue = Number(normalizedValue);
+
+    if (value.trim() === "" || Number.isNaN(numberValue)) {
+      alert("Informe um valor válido.");
+      return null;
+    }
+
+    const roundedValue = Math.round(numberValue);
+
+    if (roundedValue > 2147483647) {
+      alert("O valor máximo permitido é 2.147.483.647");
+      return null;
+    }
+
+    return roundedValue;
   }
 
   //#region calculo data
@@ -62,21 +70,35 @@ const ModalUpdate = (props: modalUpdateProps) => {
   //#endregion
 
   const updateTask = async (id: number) => {
-    props.fechaModal();
     if (
       inputText === "" ||
-      inputNumber === 0 ||
+      inputNumber === "" ||
       inputRadio == null ||
       inputDate == ""
     ) {
-      return "";
+      return false;
     } else {
-      await updateTaskApi({id, descricao: inputText, dinheiro:inputNumber, positivo:inputRadio, data:inputDate});
+      const moneyValue = normalizeMoneyValue(inputNumber);
+
+      if (moneyValue === null) {
+        return false;
+      }
+
+      props.fechaModal();
+      await updateTaskApi({
+        id,
+        descricao: inputText,
+        dinheiro: moneyValue,
+        positivo: inputRadio === true || inputRadio === "true",
+        data: inputDate,
+      });
 
       setInputDate("");
       setInputText("");
       setInputRadio(false);
-      setInputNumber(0);
+      setInputNumber("");
+
+      return true;
     }
   };
 
@@ -101,10 +123,10 @@ const ModalUpdate = (props: modalUpdateProps) => {
           value={inputText}
         />
         <input
-          type="number"
+          type="text"
+          inputMode="decimal"
           placeholder="Valor"
           className="text-black w-2/4 p-2 rounded-md"
-          max={2147483647}
           onChange={handleInputNumber}
           value={inputNumber}
         />
@@ -138,11 +160,13 @@ const ModalUpdate = (props: modalUpdateProps) => {
         <button
           type="submit"
           className="w-auto py-2 px-10 rounded-lg bg-sky-500 hover:bg-sky-700 transition-colors"
-          onClick={(e) => {
+          onClick={async (e) => {
             e.preventDefault();
-            updateTask(props.identificadorUpdate);
+            const isSaved = await updateTask(props.identificadorUpdate);
 
-            props.fetchUpdate();
+            if (isSaved) {
+              props.fetchUpdate();
+            }
           }}
         >
           Salvar Alterações
