@@ -26,7 +26,7 @@ npm install
 npm run dev
 
 # Crie o .env com a URL do backend (exemplo):
-VITE_API_URL='conexão com o backend'
+VITE_URL_PROD='conexão com o backend'
 ```
   
   
