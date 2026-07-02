@@ -3,16 +3,23 @@
 @tailwind utilities;
 
 body {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   background-color: #1e232d;
   color: white;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
 }
 
 .Modal {
-  width: 40%;
-  height: 70%;
+  width: calc(100vw - 24px);
+  max-height: 90vh;
+  overflow-y: auto;
+  box-sizing: border-box;
   border-radius: 15px;
   background-color: #3a445d;
   color: white;
@@ -25,12 +32,25 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 12px;
+  box-sizing: border-box;
   background-color: rgba(10, 23, 55, 0.5);
+}
+
+@media (min-width: 768px) {
+  .Modal {
+    width: 40%;
+    height: 70%;
+  }
+
+  .Overlay {
+    padding: 0;
+  }
 }
 
 ::-webkit-scrollbar {

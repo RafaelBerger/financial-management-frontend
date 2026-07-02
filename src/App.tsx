@@ -106,8 +106,8 @@ function App() {
         </div>
         <ModalCreation fetch={handleFetch} />
       </Modal>
-      <div className="flex justify-center items-center w-screen h-screen">
-        <main className="bg-pers-100 w-3/4 max-w-7xl h-[90%] rounded-[15px] flex flex-col p-8 pt-4">
+      <div className="flex justify-center items-stretch md:items-center w-full min-h-screen md:h-screen p-3 md:p-0 overflow-x-hidden">
+        <main className="bg-pers-100 w-full max-w-7xl min-h-[calc(100vh-1.5rem)] md:w-3/4 md:h-[90%] md:min-h-[80%] rounded-[15px] flex flex-col p-4 pt-4 md:p-8 md:pt-4">
           <div className="w-full h-12 flex justify-center items-center">
             <input
               className="text-black rounded-md p-1 cursor-pointer"
@@ -117,7 +117,7 @@ function App() {
               onChange={handleMonth}
             />
           </div>
-          <div className="bg-gray-800 w-full h-auto flex justify-evenly mt-2 mb-2 rounded-md py-1">
+          <div className="bg-gray-800 w-full h-auto grid grid-cols-1 gap-1 mt-2 mb-2 rounded-md py-2 px-3 text-center sm:grid-cols-2 md:flex md:justify-evenly md:gap-0 md:py-1 md:px-0">
             <p className="text-base">Itens: {numItens} </p>
             <p className="text-base">
               Receitas: <span className="text-green-400">R$ {income} </span>
@@ -146,7 +146,7 @@ function App() {
               onClick={openModal}
             />
           </div>
-          <div className="overflow-auto">
+          <div className="overflow-auto flex-1 pr-1">
             {tasks.map((task: any, index: number) => {
               return (
                 <Card

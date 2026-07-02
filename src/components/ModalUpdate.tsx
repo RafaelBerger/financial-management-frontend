@@ -104,21 +104,21 @@ const ModalUpdate = (props: modalUpdateProps) => {
 
   return (
     <>
-      <h1 className="flex justify-center mt-8 mb-4">
+      <h1 className="flex justify-center mt-4 mb-4 px-4 text-center md:mt-8">
         Informe os dados para atualizar o card
       </h1>
-      <form className="flex flex-col w-full h-3/5 justify-around items-center gap-4">
+      <form className="flex flex-col w-full h-auto justify-around items-center gap-4 pb-6 md:h-3/5 md:pb-0">
         <input
           type="month"
           max={`${year}-${monthFormated}`}
-          className="text-black w-2/4 p-2 rounded-md"
+          className="text-black w-[90%] p-2 rounded-md sm:w-2/4"
           onChange={handleInputDate}
           value={inputDate}
         />
         <input
           type="text"
           placeholder="Descrição"
-          className="text-black w-2/4 p-2 rounded-md "
+          className="text-black w-[90%] p-2 rounded-md sm:w-2/4"
           onChange={handleInputText}
           value={inputText}
         />
@@ -126,7 +126,7 @@ const ModalUpdate = (props: modalUpdateProps) => {
           type="text"
           inputMode="decimal"
           placeholder="Valor"
-          className="text-black w-2/4 p-2 rounded-md"
+          className="text-black w-[90%] p-2 rounded-md sm:w-2/4"
           onChange={handleInputNumber}
           value={inputNumber}
         />
@@ -159,7 +159,7 @@ const ModalUpdate = (props: modalUpdateProps) => {
         </div>
         <button
           type="submit"
-          className="w-auto py-2 px-10 rounded-lg bg-sky-500 hover:bg-sky-700 transition-colors"
+          className="w-[90%] py-2 px-10 rounded-lg bg-sky-500 hover:bg-sky-700 transition-colors sm:w-auto"
           onClick={async (e) => {
             e.preventDefault();
             const isSaved = await updateTask(props.identificadorUpdate);

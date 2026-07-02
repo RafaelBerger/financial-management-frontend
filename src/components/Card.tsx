@@ -60,15 +60,15 @@ const Card = (props: CardProps) => {
           fechaModal={closeModal}
         />
       </Modal>
-      <article className="w-full flex items-center justify-between bg-pers-200 px-4 py-2 mb-3 rounded-lg">
-        <div className="flex gap-4 items-center max-w-2xl">
-          <b>#{props.id}</b>
-          <p className="text-justify">{props.description}</p>
+      <article className="w-full flex flex-col items-stretch justify-between gap-3 bg-pers-200 px-4 py-3 mb-3 rounded-lg md:flex-row md:items-center md:gap-0 md:py-2">
+        <div className="flex gap-4 items-start min-w-0 max-w-full md:items-center md:max-w-2xl">
+          <b className="shrink-0">#{props.id}</b>
+          <p className="text-left break-words min-w-0 md:text-justify">{props.description}</p>
         </div>
-        <div className="flex max-w-xs  gap-10 items-center">
-          <div>
+        <div className="flex w-full max-w-full justify-between gap-4 items-center md:w-auto md:max-w-xs md:gap-10">
+          <div className="min-w-0">
             <span
-              className={`${
+              className={`break-words ${
                 props.positive === true ? "text-green-400" : "text-red-600"
               }`}
             >
